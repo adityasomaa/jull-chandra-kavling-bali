@@ -3,7 +3,8 @@
 Situs personal untuk Jull Chandra, agen tanah kavling yang berbasis di Jl. Tukad Balian No. 168, Renon, Denpasar.
 Empat halaman utama (Home, Kavling, Kalkulator, Kontak), lima halaman detail listing, serta halaman kebijakan privasi dan syarat ketentuan.
 
-- Produksi: https://jull-chandra-kavling-bali.vercel.app
+- Produksi: https://jullchandra-kavling-bali.vercel.app
+  (alias `jull-chandra-kavling-bali.vercel.app` sudah dipegang akun Vercel lain, status 409, jadi dipakai nama terdekat yang kosong. Canonical, sitemap, dan robots mengikuti domain ini lewat `SITE_URL` di `lib/site.ts`.)
 - Subdomain: https://jull-chandra-kavling-bali.onyxcreative.asia
 
 ## Stack

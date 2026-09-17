@@ -1,5 +1,5 @@
 // Satu sumber untuk domain dan data kontak. Ganti SITE_URL di sini bila domain final berubah.
-export const SITE_URL = "https://jull-chandra-kavling-bali.vercel.app";
+export const SITE_URL = "https://jullchandra-kavling-bali.vercel.app";
 
 export const SITE = {
   name: "Jull Chandra",
