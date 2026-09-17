@@ -9,8 +9,8 @@
     "start": "next start",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
-    "art": "node scripts/generate-art.mjs",
-    "audit:site": "node scripts/audit-site.mjs"
+    "audit:site": "node scripts/audit-site.mjs",
+    "photos": "node scripts/fetch-photos.mjs"
   },
   "engines": {
     "node": ">=20.9"

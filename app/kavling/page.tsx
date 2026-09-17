@@ -13,6 +13,7 @@ import { SectionHeader } from "@/components/ui/section-header";
 import { CTA } from "@/lib/site";
 import { allListingsJsonLd, breadcrumbJsonLd } from "@/lib/structured-data";
 import { WA_GENERAL } from "@/lib/whatsapp";
+import { PHOTOS, photoSrc } from "@/lib/photos";
 
 export const metadata: Metadata = {
   title: "Daftar Tanah Kavling di Bali",
@@ -56,7 +57,7 @@ export default function KavlingPage() {
       <JsonLd data={breadcrumbJsonLd([{ name: "Home", path: "/" }, { name: "Kavling", path: "/kavling" }])} />
 
       <PageHero
-        art="/art/page-kavling-night-16x9.svg"
+        art={photoSrc(PHOTOS.pageKavling, "16x9")}
         crumbs={[
           { name: "Home", href: "/" },
           { name: "Kavling", href: "/kavling" },
@@ -104,9 +105,9 @@ export default function KavlingPage() {
           <SectionHeader
             align="center"
             titleId="galeri-title"
-            label="Ilustrasi lokasi"
-            title="Lima lokasi dalam garis kontur"
-            description="Ilustrasi dibuat dari nama tiap lokasi sebagai penanda visual sementara. Gambar ini bukan foto atau peta lahan."
+            label="Galeri kawasan"
+            title="Suasana kawasan di sekitar lokasi"
+            description="Foto ilustrasi kawasan di Badung, Denpasar, dan Gianyar dari Pexels. Foto ini bukan foto lahan listing."
             cta={{ href: "#daftar", label: "Buka peta per listing" }}
             titleClassName="max-w-[14ch] md:max-w-[22ch] xl:max-w-none"
           />
@@ -142,7 +143,7 @@ export default function KavlingPage() {
           <div className="grid gap-6 lg:grid-cols-2 lg:items-start">
             <Faq items={FAQ} />
             <Reveal className="hidden lg:block">
-              <Art src="/art/faq-day-1x1.svg" alt="Ilustrasi kontur tanah dan petak kavling" ratio="1/1" className="rounded-(--radius-card)" sizes="50vw" />
+              <Art src={photoSrc(PHOTOS.surveyor, "1x1")} alt={PHOTOS.surveyor.alt} ratio="1/1" className="rounded-(--radius-card)" sizes="50vw" />
             </Reveal>
           </div>
         </div>

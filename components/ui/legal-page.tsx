@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { JsonLd } from "@/components/json-ld";
 import { breadcrumbJsonLd } from "@/lib/structured-data";
 import { PageHero } from "./page-hero";
+import { PHOTOS, photoSrc } from "@/lib/photos";
 
 type Section = { id: string; title: string; body: ReactNode };
 
@@ -21,7 +22,7 @@ export function LegalPage({ path, crumb, label, title, description, updated, sec
     <>
       <JsonLd data={breadcrumbJsonLd([{ name: "Home", path: "/" }, { name: crumb, path }])} />
       <PageHero
-        art="/art/page-legal-night-16x9.svg"
+        art={photoSrc(PHOTOS.pageLegal, "16x9")}
         crumbs={[
           { name: "Home", href: "/" },
           { name: crumb, href: path },

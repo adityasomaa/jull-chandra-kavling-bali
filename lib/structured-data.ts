@@ -1,5 +1,6 @@
 import { LISTINGS, type Listing } from "./listings";
 import { SITE, SITE_URL } from "./site";
+import { listingPhoto, photoSrc } from "./photos";
 
 export function agentJsonLd() {
   return {
@@ -32,7 +33,7 @@ export function listingJsonLd(l: Listing) {
     description: l.summary,
     url: `${SITE_URL}/kavling/${l.slug}`,
     datePosted: l.datePosted,
-    image: `${SITE_URL}/art/loc-${l.slug}-day-16x9.svg`,
+    image: `${SITE_URL}${photoSrc(listingPhoto(l.slug), "16x9")}`,
     provider: { "@id": `${SITE_URL}/#agent` },
     contentLocation: {
       "@type": "Place",

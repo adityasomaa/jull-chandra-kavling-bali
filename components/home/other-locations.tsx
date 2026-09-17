@@ -10,6 +10,7 @@ import { CoverArt } from "@/components/ui/cover-art";
 import { SectionHeader } from "@/components/ui/section-header";
 import { OTHERS, type Listing } from "@/lib/listings";
 import { CTA } from "@/lib/site";
+import { PHOTOS, listingPhoto, photoSrc } from "@/lib/photos";
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
@@ -28,8 +29,8 @@ function LocationCard({ l, compact = false }: { l: Listing; compact?: boolean })
       className="group block rounded-(--radius-card) bg-mist p-3 text-ink shadow-[0_30px_60px_-30px_rgb(0_0_0/0.5)] transition-colors hover:bg-surface"
     >
       <Art
-        src={`/art/loc-${l.slug}-day-16x9.svg`}
-        alt={`Ilustrasi kontur dan petak kavling untuk ${l.area}`}
+        src={photoSrc(listingPhoto(l.slug), "16x9")}
+        alt={`${listingPhoto(l.slug).alt} (foto ilustrasi)`}
         ratio="16/9"
         className="rounded-[14px]"
         sizes="(min-width: 1024px) 560px, 100vw"
@@ -87,10 +88,10 @@ export function OtherLocations() {
                 className="absolute inset-0 transition-opacity duration-1000 ease-(--ease-out-expo)"
                 style={{ opacity: i === active ? 1 : 0 }}
               >
-                <CoverArt src={`/art/loc-${l.slug}-night-16x9.svg`} />
+                <CoverArt src={photoSrc(listingPhoto(l.slug), "16x9")} />
               </div>
             ))}
-            <div className="absolute inset-0 bg-night/50" />
+            <div className="absolute inset-0 bg-night/70" />
           </div>
 
           {header("lokasi-title")}
@@ -115,9 +116,9 @@ export function OtherLocations() {
           <div className="absolute bottom-28 left-[30px] grid gap-2 xl:left-[60px]" aria-live="polite">
             <p className="t-label num">
               <span className="text-night-ink">{pad(active + 1)}</span>
-              <span className="text-night-muted">/{pad(OTHERS.length)}</span>
+              <span className="text-night-ink">/{pad(OTHERS.length)}</span>
             </p>
-            <p className="flex items-center gap-1.5 text-night-muted">
+            <p className="flex items-center gap-1.5 text-night-ink">
               <MapPin size={18} aria-hidden="true" />
               {OTHERS[active].regency}
             </p>
@@ -127,8 +128,8 @@ export function OtherLocations() {
 
       {/* Mode tumpuk: mobile, tablet, dan layar pendek */}
       <div className="sticky-fallback relative isolate section-y">
-        <CoverArt src="/art/page-kavling-night-16x9.svg" />
-        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-night/60" />
+        <CoverArt src={photoSrc(PHOTOS.gianyar, "16x9")} />
+        <div aria-hidden="true" className="absolute inset-0 -z-10 bg-night/75" />
         <div className="container-x grid gap-10">
           {header("lokasi-title-stack")}
           <ul className="grid gap-5 md:grid-cols-2">

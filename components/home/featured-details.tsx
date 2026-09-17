@@ -2,6 +2,7 @@ import { Reveal } from "@/components/motion/reveal";
 import { Art } from "@/components/ui/art";
 import { SectionHeader } from "@/components/ui/section-header";
 import { CTA } from "@/lib/site";
+import { PHOTOS, photoSrc } from "@/lib/photos";
 
 type Card = {
   title: string;
@@ -18,27 +19,27 @@ const CARDS: Card[] = [
     title: "Jalan kavling 6 meter",
     text: "Jalan di dalam area kavling selebar 6 meter dan dilengkapi drainase.",
     tags: ["Akses", "Drainase"],
-    src: "/art/loc-sawangan-nusa-dua-night-16x9.svg",
+    src: photoSrc(PHOTOS.road, "16x9"),
     ratio: "16/9",
-    alt: "Ilustrasi garis kontur dan petak kavling dengan jalan di tengah",
+    alt: PHOTOS.road.alt,
     className: "lg:col-start-1 lg:row-start-2 lg:self-end",
   },
   {
     title: "Zona pemukiman",
     text: "Menurut informasi listing, lahan berada di zona pemukiman dan ditawarkan sebagai kavling villa.",
     tags: ["Zonasi", "Kavling villa"],
-    src: "/art/page-kavling-night-16x9.svg",
+    src: photoSrc(PHOTOS.villa, "16x9"),
     ratio: "16/9",
-    alt: "Ilustrasi cakrawala bukit dan petak lahan pada malam hari",
+    alt: PHOTOS.villa.alt,
     className: "lg:col-start-2 lg:row-start-2 lg:self-end lg:min-h-[480px]",
   },
   {
     title: "Pantai dan bukit terdekat",
     text: "Listing menyebut Pantai Sawangan, Pantai Pandawa, dan Gunung Payung. Jarak tepatnya dikonfirmasi saat survei.",
     tags: ["Pantai Sawangan", "Pandawa", "Gunung Payung"],
-    src: "/art/loc-sawangan-nusa-dua-day-1x1.svg",
+    src: photoSrc(PHOTOS.coast, "1x1"),
     ratio: "1/1",
-    alt: "Ilustrasi kontur tanah kawasan Sawangan",
+    alt: PHOTOS.coast.alt,
     className: "lg:col-start-3 lg:row-span-2 lg:row-start-1",
   },
 ];

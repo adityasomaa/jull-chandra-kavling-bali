@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { Art } from "@/components/ui/art";
 import { formatDate } from "@/lib/format";
 import { LISTINGS } from "@/lib/listings";
+import { listingPhoto, photoSrc } from "@/lib/photos";
 
 /**
  * Catatan sumber: pengganti section testimoni pada referensi (situs ini tidak memuat testimoni).
@@ -62,8 +63,8 @@ export function SourceNotes() {
               </div>
             </div>
             <Art
-              src={`/art/loc-${l.slug}-day-1x1.svg`}
-              alt={`Ilustrasi lokasi ${l.area}`}
+              src={photoSrc(listingPhoto(l.slug), "1x1")}
+              alt={`${listingPhoto(l.slug).alt} (foto ilustrasi)`}
               ratio="1/1"
               className="w-full max-w-[220px] rounded-[14px] md:max-w-none"
               sizes="220px"

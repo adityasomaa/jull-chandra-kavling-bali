@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { LegalPage } from "@/components/ui/legal-page";
+import { ALL_PHOTOS } from "@/lib/photos";
+
+const CREDITS = [...new Set(ALL_PHOTOS.map((p) => p.by))].join(", ");
 
 export const metadata: Metadata = {
   title: "Syarat dan Ketentuan",
@@ -43,11 +46,11 @@ const SECTIONS = [
   },
   {
     id: "kalkulator-peta",
-    title: "Kalkulator, peta, dan ilustrasi",
+    title: "Kalkulator dan peta",
     body: (
       <p>
         Hasil kalkulator adalah perkiraan dan belum termasuk pajak atau biaya lain. Titik pada peta menandai area umum, bukan
-        batas atau lokasi kavling. Ilustrasi di situs ini adalah grafis sementara dan bukan foto atau gambar teknis lahan.
+        batas atau lokasi kavling.
       </p>
     ),
   },
@@ -73,8 +76,16 @@ const SECTIONS = [
   },
   {
     id: "hak-cipta",
-    title: "Hak cipta",
-    body: <p>Teks dan grafis di situs ini tidak boleh disalin untuk keperluan komersial tanpa izin tertulis.</p>,
+    title: "Hak cipta dan foto",
+    body: (
+      <>
+        <p>Teks di situs ini tidak boleh disalin untuk keperluan komersial tanpa izin tertulis.</p>
+        <p>
+          Foto berasal dari Pexels dan dipakai sesuai lisensi Pexels. Foto tersebut adalah foto ilustrasi kawasan, bukan
+          foto lahan yang ditawarkan. Fotografer: {CREDITS}.
+        </p>
+      </>
+    ),
   },
   {
     id: "perubahan",

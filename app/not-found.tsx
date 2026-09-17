@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { PageHero } from "@/components/ui/page-hero";
 import { CTA } from "@/lib/site";
+import { PHOTOS, photoSrc } from "@/lib/photos";
 
 export const metadata: Metadata = {
   title: "Halaman tidak ditemukan",
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
 export default function NotFound() {
   return (
     <PageHero
-      art="/art/page-legal-night-16x9.svg"
+      art={photoSrc(PHOTOS.pageLegal, "16x9")}
       crumbs={[
         { name: "Home", href: "/" },
         { name: "Tidak ditemukan", href: "/404" },

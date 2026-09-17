@@ -11,6 +11,7 @@ import { formatDate, formatRupiah } from "@/lib/format";
 import { LISTINGS, TO_CONFIRM, UNKNOWN, getListing } from "@/lib/listings";
 import { breadcrumbJsonLd, listingJsonLd } from "@/lib/structured-data";
 import { waListing } from "@/lib/whatsapp";
+import { PHOTO_NOTE, listingPhoto, photoSrc } from "@/lib/photos";
 
 type Params = { params: Promise<{ slug: string }> };
 
@@ -66,7 +67,7 @@ export default async function ListingPage({ params }: Params) {
       />
 
       <PageHero
-        art={`/art/loc-${l.slug}-night-16x9.svg`}
+        art={photoSrc(listingPhoto(l.slug), "16x9")}
         crumbs={[
           { name: "Home", href: "/" },
           { name: "Kavling", href: "/kavling" },
@@ -101,14 +102,15 @@ export default async function ListingPage({ params }: Params) {
               </dl>
             </Reveal>
           </div>
-          <Reveal delay={120}>
+          <Reveal delay={120} as="figure" className="grid gap-2">
             <Art
-              src={`/art/loc-${l.slug}-day-1x1.svg`}
-              alt={`Ilustrasi kontur dan petak kavling untuk ${l.area}`}
+              src={photoSrc(listingPhoto(l.slug), "1x1")}
+              alt={listingPhoto(l.slug).alt}
               ratio="1/1"
               className="rounded-(--radius-card)"
               sizes="(min-width: 1024px) 50vw, 100vw"
             />
+            <figcaption className="text-sm text-ink-muted">{PHOTO_NOTE}</figcaption>
           </Reveal>
         </div>
       </section>

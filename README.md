@@ -16,13 +16,14 @@ Empat halaman utama (Home, Kavling, Kalkulator, Kontak), lima halaman detail lis
 | Gerak | CSS transition + IntersectionObserver untuk reveal, `motion` (`useScroll`) untuk section lokasi yang menempel, Lenis untuk smooth scroll desktop |
 | Ikon | `@phosphor-icons/react` |
 | Font | Geist Variable, WOFF2 self-host lewat `next/font/local` |
-| Gambar | SVG generatif dari `scripts/generate-art.mjs`, `images.unoptimized = true` |
+| Gambar | Foto Pexels yang di-self-host di `public/photos`, `images.unoptimized = true` |
 
 ```bash
 npm install
 npm run dev          # http://localhost:3000
 npm run build
-npm run art          # membuat ulang semua ilustrasi di public/art
+npm run photos       # unduh ulang foto Pexels ke public/photos
+python scripts/optimize-photos.py      # kompres ulang foto (progressive JPEG)
 node scripts/check-contrast.mjs        # cek kontras semua pasangan token
 node scripts/audit-site.mjs <baseUrl>  # audit (butuh playwright terpasang terpisah)
 ```
@@ -49,11 +50,41 @@ Neue Montreal tersedia di komputer, tetapi lisensi Pangram Pangram untuk pemakai
 
 File TTF di `assets/og` hanya dipakai server saat membuat OG image, tidak dikirim ke browser.
 
-### Bahasa visual gambar
+### Foto
 
-Semua gambar adalah SVG deterministik dari `scripts/generate-art.mjs`: garis kontur tanah (marching squares di atas medan ketinggian), petak kavling dengan jalan di tengah, dan cakrawala bukit berlapis. Seed diambil dari nama lokasi, jadi tiap lokasi punya kontur dan susunan petak sendiri, dan hasilnya selalu sama saat dibuat ulang. Tanpa grain atau noise; kedalaman datang dari gradasi dan garis.
+Semua gambar adalah foto dari [Pexels](https://www.pexels.com/license/) (bebas dipakai untuk komersial, atribusi tidak wajib tetapi tetap dicantumkan di bawah). Foto dicari lewat Pexels API (Composio), dipotong CDN Pexels ke 16:9 atau 1:1, lalu di-self-host di `public/photos` supaya tidak bergantung pada CDN pihak ketiga dan tetap lolos CSP `img-src 'self'`. Daftar foto, alt text, dan kredit ada di `lib/photos.ts`.
 
-Rasio hanya 16:9 dan 1:1, dikunci di komponen `Art` lewat `aspect-ratio` sehingga ruang tertahan sebelum gambar termuat. Latar penuh (hero, CTA) tetap memakai elemen 16:9 yang diperbesar hingga menutup wadah (`CoverArt`), bukan rasio bebas. Bila gambar gagal dimuat, `Art` menampilkan panel dengan ikon peta dan keterangan, bukan ikon rusak.
+- **Tiap lokasi punya foto berbeda** yang mewakili karakter kawasannya (pesisir Bali selatan untuk Sawangan, jalan permukiman untuk Sidakarya, desa di antara hutan untuk Klusa Bresela, atap kota untuk Lumintang, lembah dan sawah untuk Pejeng).
+- **Semua foto adalah foto ilustrasi kawasan, bukan foto lahan listing.** Keterangan ini tampil di kartu listing, halaman detail, dan lightbox galeri, karena foto lahan asli belum tersedia.
+- **Avatar JC tetap placeholder.** Foto stok orang tidak dipakai supaya tidak terbaca sebagai foto Jull Chandra.
+- Rasio hanya 16:9 dan 1:1, dikunci di komponen `Art` lewat `aspect-ratio` sehingga ruang tertahan sebelum gambar termuat. Latar penuh (hero, CTA, hero halaman) memakai elemen 16:9 yang diperbesar hingga menutup wadah (`CoverArt`). Bila foto gagal dimuat, `Art` menampilkan panel dengan ikon peta dan keterangan.
+- Overlay gelap di atas foto diukur terhadap piksel terang persentil 98 tiap foto: teks `night-ink` minimal 4.73:1. Teks di atas foto selalu memakai `night-ink`, bukan `night-muted`.
+- Loader kontur tetap berupa animasi garis (bagian UI transisi, bukan gambar konten).
+
+| Pemakaian | Foto | Fotografer |
+| --- | --- | --- |
+| hero | [Sawah terasering dan hutan tropis di Bali dari udara](https://www.pexels.com/photo/35428411/) | Tom Fisk |
+| cta | [Gunung Agung saat senja dilihat dari udara](https://www.pexels.com/photo/35159215/) | Tom Fisk |
+| pageKavling | [Area pematangan lahan yang dibagi menjadi petak-petak di Bali](https://www.pexels.com/photo/36422828/) | Tom Fisk |
+| pageKalkulator | [Petak sawah terasering di Bali dari udara](https://www.pexels.com/photo/36810327/) | Tom Fisk |
+| pageKontak | [Jalan desa di Bali dengan arca penjaga dan bangunan tradisional](https://www.pexels.com/photo/35094745/) | Relaxing Journeys |
+| pageLegal | [Perbukitan hijau dan laut di Bali](https://www.pexels.com/photo/35057004/) | Tom Fisk |
+| sawangan-nusa-dua | [Pesisir berpasir dan tebing hijau di Bali selatan](https://www.pexels.com/photo/36548779/) | Tom Fisk |
+| sidakarya-denpasar | [Jalan permukiman di Bali dengan gerbang tradisional dan penjor](https://www.pexels.com/photo/35094744/) | Relaxing Journeys |
+| klusa-bresela-ubud | [Desa di antara hutan tropis di Gianyar dari udara](https://www.pexels.com/photo/36947695/) | Tom Fisk |
+| lumintang-denpasar | [Atap-atap rumah di kawasan kota tropis dari udara](https://www.pexels.com/photo/38248989/) | Miguel Cuenca |
+| pejeng-gianyar | [Lembah dengan sawah terasering dan hutan tropis di Bali](https://www.pexels.com/photo/39472100/) | Mahmut Yılmaz |
+| road | [Jalan dan bangunan di antara sawah di Bali dari udara](https://www.pexels.com/photo/36699651/) | Tom Fisk |
+| villa | [Kawasan hunian villa dengan kolam renang di Bali](https://www.pexels.com/photo/35043038/) | Tom Fisk |
+| coast | [Tebing hijau dan laut di pesisir Bali](https://www.pexels.com/photo/34908200/) | Tom Fisk |
+| measure | [Meteran kuning dengan skala sentimeter](https://www.pexels.com/photo/3639034/) | Castorly Stock |
+| surveyor | [Petugas mengukur lahan dengan alat GPS](https://www.pexels.com/photo/24245275/) | Asad Photo Maldives |
+| siteVisit | [Dua orang meninjau lahan terbuka](https://www.pexels.com/photo/8961260/) | Mikael Blomkvist |
+| house | [Rumah beratap genteng di tepi sawah Bali](https://www.pexels.com/photo/35930884/) | Evelin Magnus |
+| palms | [Sawah terasering dan pohon kelapa di Bali](https://www.pexels.com/photo/36896228/) | Tom Fisk |
+| badung | [Pantai dan tebing di Bali selatan](https://www.pexels.com/photo/6015647/) | Alesia Kozik |
+| gianyar | [Sawah terasering dan pohon kelapa di Gianyar](https://www.pexels.com/photo/15994341/) | Balazs Simon |
+| denpasar | [Jalan di Bali yang dihiasi penjor](https://www.pexels.com/photo/36415760/) | Mick |
 
 ## Referensi layout: farmio.framer.website
 
@@ -88,7 +119,8 @@ Situs referensi dibuka dan diukur di 1440, 810, dan 390 px (urutan section, skal
 - **"[Keep Scrolling]" di section sticky diganti nama kabupaten**, dan mode sticky hanya aktif di desktop dengan tinggi layar minimal 840 px; di bawah itu kartu ditumpuk biasa agar tidak terpotong.
 - **Galeri memakai kolom berisi satu tile 16:9 dan satu tile 1:1** supaya tinggi kolom sama tanpa rasio bebas.
 - **Warna dan font diganti** (lihat di atas). Hijau-lime Farmio terlalu "agritech" untuk agen tanah.
-- **Loader dan transisi halaman ditambahkan** (tidak ada di referensi) dengan bahasa bentuk kontur dan petak yang sama.
+- **Loader dan transisi halaman ditambahkan** (tidak ada di referensi) dengan bahasa bentuk kontur dan petak.
+- **Galeri berisi foto kawasan** (lima lokasi + Badung, Denpasar, Gianyar), bukan foto proyek seperti di referensi.
 
 ## Riset industri
 

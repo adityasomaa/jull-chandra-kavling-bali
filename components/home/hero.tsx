@@ -8,6 +8,7 @@ import { Avatar } from "@/components/ui/avatar";
 import { CoverArt } from "@/components/ui/cover-art";
 import { Listbox } from "@/components/ui/listbox";
 import { LOCATION_OPTIONS } from "@/lib/listings";
+import { PHOTOS, photoSrc } from "@/lib/photos";
 
 const SEARCH_OPTIONS = [{ value: "semua", label: "Semua lokasi" }, ...LOCATION_OPTIONS];
 
@@ -32,15 +33,15 @@ export function Hero() {
       className="hero on-night relative isolate h-hero min-h-[600px] bg-night text-night-ink"
       data-shown={shown ? "true" : "false"}
     >
-      <CoverArt src="/art/hero-night-16x9.svg" priority />
+      <CoverArt src={photoSrc(PHOTOS.hero, "16x9")} priority />
       <div
         aria-hidden="true"
-        className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgb(11_34_33/0.55)_0%,rgb(11_34_33/0.15)_40%,rgb(11_34_33/0.75)_100%)]"
+        className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgb(11_34_33/0.74)_0%,rgb(11_34_33/0.6)_45%,rgb(11_34_33/0.88)_100%)]"
       />
 
       <div className="container-x flex h-full flex-col justify-between pt-[104px] pb-6 md:pt-[180px] md:pb-10 xl:pt-[210px] xl:pb-16">
         <div className="grid justify-items-start gap-4 md:gap-5">
-          <p className="hero-fade chip bg-night-soft/70 text-night-ink ring-1 ring-night-line backdrop-blur-md" style={{ ["--d" as string]: "0ms" }}>
+          <p className="hero-fade chip bg-night/80 text-night-ink ring-1 ring-night-line backdrop-blur-md" style={{ ["--d" as string]: "0ms" }}>
             Agen kavling di Renon, Denpasar
           </p>
           <SplitChars
@@ -58,18 +59,18 @@ export function Hero() {
             <Avatar size="sm" tone="night" />
             <div className="grid leading-tight">
               <span className="font-medium">Jull Chandra</span>
-              <span className="text-sm text-night-muted">Avatar placeholder</span>
+              <span className="text-sm text-night-ink">Avatar placeholder</span>
             </div>
           </div>
 
           <article
-            className="hero-fade hidden w-[238px] rounded-(--radius-card) bg-night-soft/60 p-2.5 ring-1 ring-night-line backdrop-blur-md md:block"
+            className="hero-fade hidden w-[238px] rounded-(--radius-card) bg-night/85 p-2.5 ring-1 ring-night-line backdrop-blur-md md:block"
             style={{ ["--d" as string]: "500ms" }}
           >
             <Avatar size="lg" tone="night" />
             <div className="px-1 pt-3 pb-1">
               <p className="t-h5 text-night-ink">Jull Chandra</p>
-              <p className="mt-1 text-sm text-night-muted">Foto profil menyusul. Berbasis di Renon, Denpasar.</p>
+              <p className="mt-1 text-sm text-night-ink">Foto profil menyusul. Berbasis di Renon, Denpasar.</p>
             </div>
           </article>
 

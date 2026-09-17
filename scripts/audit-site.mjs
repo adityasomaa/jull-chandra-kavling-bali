@@ -22,8 +22,9 @@ const ROUTES = [
   "/opengraph-image",
   "/icon.svg",
   "/manifest.webmanifest",
+  "/photos/hero-16x9.jpg",
 ];
-const PAGES = ROUTES.filter((r) => !/\.(xml|txt|svg|webmanifest)$|opengraph/.test(r));
+const PAGES = ROUTES.filter((r) => !/\.(xml|txt|svg|webmanifest|jpg)$|opengraph/.test(r));
 const VIEWPORTS = [
   { w: 375, h: 812, maxLines: 3 },
   { w: 768, h: 1024, maxLines: 2 },

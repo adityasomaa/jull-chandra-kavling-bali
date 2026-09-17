@@ -10,6 +10,7 @@ import { SectionHeader } from "@/components/ui/section-header";
 import { SITE } from "@/lib/site";
 import { breadcrumbJsonLd } from "@/lib/structured-data";
 import { WA_GENERAL } from "@/lib/whatsapp";
+import { PHOTOS, photoSrc } from "@/lib/photos";
 
 export const metadata: Metadata = {
   title: "Kontak dan Jadwal Survei Kavling",
@@ -27,21 +28,21 @@ const CHANNELS = [
     title: "Jull Chandra",
     role: "Agen tanah kavling, Renon, Denpasar",
     href: null,
-    media: "avatar" as const,
+    media: "avatar",
   },
   {
     key: "wa",
     title: `WhatsApp ${SITE.phoneDisplay}`,
     role: `WhatsApp Business atas nama ${SITE.waName}`,
     href: WA_GENERAL,
-    media: "/art/kontak-wa-day-1x1.svg",
+    media: photoSrc(PHOTOS.house, "1x1"),
   },
   {
     key: "ig",
     title: `Instagram ${SITE.instagramHandle}`,
     role: "Akun Instagram Jull Chandra",
     href: SITE.instagram,
-    media: "/art/renon-day-1x1.svg",
+    media: photoSrc(PHOTOS.palms, "1x1"),
   },
 ];
 
@@ -50,7 +51,7 @@ export default function KontakPage() {
     <>
       <JsonLd data={breadcrumbJsonLd([{ name: "Home", path: "/" }, { name: "Kontak", path: "/kontak" }])} />
       <PageHero
-        art="/art/page-kontak-night-16x9.svg"
+        art={photoSrc(PHOTOS.pageKontak, "16x9")}
         crumbs={[
           { name: "Home", href: "/" },
           { name: "Kontak", href: "/kontak" },
@@ -73,7 +74,7 @@ export default function KontakPage() {
               titleClassName="max-w-[14ch] md:max-w-none"
             />
             <Reveal className="hidden lg:block">
-              <Art src="/art/survey-day-16x9.svg" alt="Ilustrasi cakrawala bukit dan petak lahan" ratio="16/9" className="rounded-(--radius-card)" sizes="40vw" />
+              <Art src={photoSrc(PHOTOS.siteVisit, "16x9")} alt={PHOTOS.siteVisit.alt} ratio="16/9" className="rounded-(--radius-card)" sizes="40vw" />
             </Reveal>
           </div>
           <div className="lg:col-span-7">

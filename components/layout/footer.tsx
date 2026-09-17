@@ -9,6 +9,7 @@ import { Wordmark } from "@/components/ui/wordmark";
 import { openCookieSettings } from "@/lib/consent";
 import { CTA, NAV, SITE } from "@/lib/site";
 import { WA_GENERAL } from "@/lib/whatsapp";
+import { PHOTOS, photoSrc } from "@/lib/photos";
 
 /**
  * CTA penutup + footer (komposisi "CTA & Footer" pada referensi).
@@ -36,8 +37,8 @@ export function Footer() {
 
   return (
     <footer className="on-night relative isolate bg-night text-night-ink">
-      <CoverArt src="/art/cta-night-16x9.svg" />
-      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-night/55" />
+      <CoverArt src={photoSrc(PHOTOS.cta, "16x9")} />
+      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-night/72" />
 
       <div className="container-x pt-20 pb-16 md:pt-24 md:pb-20">
         <SectionHeader

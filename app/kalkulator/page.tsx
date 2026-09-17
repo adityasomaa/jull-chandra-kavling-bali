@@ -9,6 +9,7 @@ import { PageHero } from "@/components/ui/page-hero";
 import { SectionHeader } from "@/components/ui/section-header";
 import { CTA } from "@/lib/site";
 import { breadcrumbJsonLd } from "@/lib/structured-data";
+import { PHOTOS, photoSrc } from "@/lib/photos";
 
 export const metadata: Metadata = {
   title: "Kalkulator Luas dan Harga Tanah per Are",
@@ -28,7 +29,7 @@ export default function KalkulatorPage() {
     <>
       <JsonLd data={breadcrumbJsonLd([{ name: "Home", path: "/" }, { name: "Kalkulator", path: "/kalkulator" }])} />
       <PageHero
-        art="/art/page-kalkulator-night-16x9.svg"
+        art={photoSrc(PHOTOS.pageKalkulator, "16x9")}
         crumbs={[
           { name: "Home", href: "/" },
           { name: "Kalkulator", href: "/kalkulator" },
@@ -83,8 +84,8 @@ export default function KalkulatorPage() {
           </div>
           <Reveal delay={120}>
             <Art
-              src="/art/calc-day-1x1.svg"
-              alt="Ilustrasi petak kavling di atas garis kontur tanah"
+              src={photoSrc(PHOTOS.measure, "1x1")}
+              alt={PHOTOS.measure.alt}
               ratio="1/1"
               className="rounded-(--radius-card)"
               sizes="(min-width: 1024px) 50vw, 100vw"

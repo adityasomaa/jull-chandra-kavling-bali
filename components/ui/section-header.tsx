@@ -45,9 +45,10 @@ export function SectionHeader({
 }: Props) {
   const night = tone === "night";
   const center = align === "center";
-  const labelCls = `t-label ${night ? "text-night-muted" : "text-ink-muted"}`;
+  // Di section gelap teks berada di atas foto, jadi semua teks memakai night-ink agar kontras tetap AA.
+  const labelCls = `t-label ${night ? "text-night-ink" : "text-ink-muted"}`;
   const titleCls = `${as === "h1" ? "t-display" : "t-h2"} ${night ? "text-night-ink" : "text-ink"} ${titleClassName}`;
-  const descCls = `t-body max-w-[60ch] ${night ? "text-night-muted" : "text-ink-muted"} ${center ? "mx-auto" : ""}`;
+  const descCls = `t-body max-w-[60ch] ${night ? "text-night-ink" : "text-ink-muted"} ${center ? "mx-auto" : ""}`;
   const ctaNode = isActionProps(cta) ? <Action tone={night ? "bright" : "primary"} {...cta} /> : cta;
 
   if (layout === "split") {

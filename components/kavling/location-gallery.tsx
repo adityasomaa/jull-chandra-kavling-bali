@@ -7,29 +7,37 @@ import { useLockWhile } from "@/components/providers/ui-lock";
 import { TransitionLink } from "@/components/transition/transition-link";
 import { Art } from "@/components/ui/art";
 import { LISTINGS } from "@/lib/listings";
+import { PHOTOS, PHOTO_NOTE, listingPhoto, photoSrc, type Photo } from "@/lib/photos";
 
-type Tile = { slug: string; name: string; ratio: "16/9" | "1/1"; src: string };
+type Tile = { key: string; name: string; alt: string; ratio: "16/9" | "1/1"; src: string; href: string };
 
-const tile = (i: number, ratio: "16/9" | "1/1"): Tile => {
-  const l = LISTINGS[i % LISTINGS.length];
-  return {
-    slug: l.slug,
-    name: `${l.area}, ${l.district}`,
-    ratio,
-    src: `/art/loc-${l.slug}-day-${ratio === "16/9" ? "16x9" : "1x1"}.svg`,
-  };
+const R = (ratio: "16/9" | "1/1") => (ratio === "16/9" ? "16x9" : "1x1") as "16x9" | "1x1";
+
+const loc = (i: number, ratio: "16/9" | "1/1"): Tile => {
+  const l = LISTINGS[i];
+  const p = listingPhoto(l.slug);
+  return { key: l.slug, name: `${l.area}, ${l.district}`, alt: p.alt, ratio, src: photoSrc(p, R(ratio)), href: `/kavling/${l.slug}` };
 };
+
+const region = (p: Photo, name: string, ratio: "16/9" | "1/1"): Tile => ({
+  key: p.key,
+  name: `Kawasan ${name}`,
+  alt: p.alt,
+  ratio,
+  src: photoSrc(p, R(ratio)),
+  href: "/kavling",
+});
 
 // Tiap kolom berisi satu tile 16:9 dan satu tile 1:1 dengan urutan bergantian, sehingga tinggi kolom selalu sama.
 const COLUMNS: Tile[][] = [
-  [tile(0, "16/9"), tile(1, "1/1")],
-  [tile(2, "1/1"), tile(3, "16/9")],
-  [tile(4, "16/9"), tile(0, "1/1")],
-  [tile(3, "1/1"), tile(2, "16/9")],
+  [loc(0, "16/9"), loc(1, "1/1")],
+  [loc(2, "1/1"), region(PHOTOS.badung, "Badung", "16/9")],
+  [loc(4, "16/9"), region(PHOTOS.gianyar, "Gianyar", "1/1")],
+  [region(PHOTOS.denpasar, "Denpasar", "1/1"), loc(3, "16/9")],
 ];
 const FLAT = COLUMNS.flat();
 
-/** Galeri ilustrasi lokasi (komposisi "Gallery" pada referensi) dengan lightbox. */
+/** Galeri foto kawasan (komposisi "Gallery" pada referensi) dengan lightbox. */
 export function LocationGallery() {
   const [open, setOpen] = useState<number | null>(null);
   const dialogRef = useRef<HTMLDivElement>(null);
@@ -71,11 +79,11 @@ export function LocationGallery() {
             {col.map((t, ti) => {
               const idx = ci * 2 + ti;
               return (
-                <Reveal key={`${t.slug}-${t.ratio}-${ci}`} delay={ci * 80}>
+                <Reveal key={`${t.key}-${t.ratio}`} delay={ci * 80}>
                   <button
                     type="button"
                     className="group block w-full cursor-zoom-in overflow-hidden"
-                    aria-label={`Perbesar ilustrasi ${t.name}`}
+                    aria-label={`Perbesar foto ${t.name}`}
                     onClick={(e) => {
                       lastTrigger.current = e.currentTarget;
                       setOpen(idx);
@@ -105,11 +113,14 @@ export function LocationGallery() {
             ref={dialogRef}
             role="dialog"
             aria-modal="true"
-            aria-label={`Ilustrasi ${current.name}`}
+            aria-label={`Foto ${current.name}`}
             className="on-night lightbox grid w-full max-w-[min(1100px,calc((100svh-160px)*16/9))] gap-4 text-night-ink"
           >
             <div className="flex items-center justify-between gap-3">
-              <p className="t-h5">{current.name}</p>
+              <div className="grid">
+                <p className="t-h5">{current.name}</p>
+                <p className="text-sm text-night-muted">{PHOTO_NOTE}</p>
+              </div>
               <button
                 type="button"
                 data-autofocus=""
@@ -121,7 +132,7 @@ export function LocationGallery() {
               </button>
             </div>
             <div className={current.ratio === "1/1" ? "mx-auto w-full max-w-[min(100%,calc(100svh-200px))]" : ""}>
-              <Art key={current.src} src={current.src} alt={`Ilustrasi kontur dan petak kavling untuk ${current.name}`} ratio={current.ratio} className="rounded-[14px]" />
+              <Art key={current.src} src={current.src} alt={current.alt} ratio={current.ratio} className="rounded-[14px]" />
             </div>
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div className="flex gap-2">
@@ -135,8 +146,8 @@ export function LocationGallery() {
                   {(open ?? 0) + 1} dari {FLAT.length}
                 </p>
               </div>
-              <TransitionLink href={`/kavling/${current.slug}`} onClick={() => setOpen(null)} className="btn btn-bright">
-                Lihat listing
+              <TransitionLink href={current.href} onClick={() => setOpen(null)} className="btn btn-bright">
+                {current.href === "/kavling" ? "Lihat kavling" : "Lihat listing"}
               </TransitionLink>
             </div>
           </div>

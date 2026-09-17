@@ -8,6 +8,7 @@ import { formatDate, formatRupiahShort } from "@/lib/format";
 import { TO_CONFIRM, UNKNOWN, type Listing } from "@/lib/listings";
 import { waListing } from "@/lib/whatsapp";
 import { MapEmbed } from "./map-embed";
+import { PHOTO_NOTE, listingPhoto, photoSrc } from "@/lib/photos";
 
 export function listingFacts(l: Listing) {
   return [
@@ -29,7 +30,7 @@ export function ListingCard({ l, headingLevel = "h3" }: { l: Listing; headingLev
     <article className="flex flex-col rounded-(--radius-card) bg-surface p-3 ring-1 ring-line/70">
       <TransitionLink href={`/kavling/${l.slug}`} className="block rounded-[14px]" tabIndex={-1} aria-hidden="true">
         <Art
-          src={`/art/loc-${l.slug}-day-16x9.svg`}
+          src={photoSrc(listingPhoto(l.slug), "16x9")}
           alt=""
           ratio="16/9"
           className="rounded-[14px]"
@@ -37,7 +38,8 @@ export function ListingCard({ l, headingLevel = "h3" }: { l: Listing; headingLev
         />
       </TransitionLink>
 
-      <div className="flex flex-1 flex-col gap-4 px-2 pt-5 pb-2 md:px-3">
+      <p className="px-2 pt-2 text-xs text-ink-muted md:px-3">{PHOTO_NOTE}</p>
+      <div className="flex flex-1 flex-col gap-4 px-2 pt-4 pb-2 md:px-3">
         <ul className="flex flex-wrap gap-2" aria-label="Kategori">
           <li className="chip bg-accent-tint text-accent-strong">{l.type}</li>
           <li className="chip bg-mist text-ink">{l.regency}</li>
